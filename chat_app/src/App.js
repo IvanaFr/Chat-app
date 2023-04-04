@@ -16,10 +16,9 @@ function App() {
     return (
       <div className='App'>
         <h1>Dobrodošli, {users}!</h1>
-        <Room users={users}/>
+        <Room />
       </div>
     );
   }
   
-
 export default App;

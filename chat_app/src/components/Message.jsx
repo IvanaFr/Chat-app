@@ -1,11 +1,11 @@
 import React from 'react';
 
 function Message(props) {
-  const { users, content } = props;
+  const { users, context } = props;
 
   return (
     <div>
-      <p>{users}:{content}</p>
+      <p>{users}:{context}</p>
     </div>
   );
 }
