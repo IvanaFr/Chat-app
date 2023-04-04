@@ -24,8 +24,11 @@ function Room({context}) {
       });
   
       drone.on('message', (message) => {
-        setMessages(prevMessages => [...prevMessages, { id: message.id, content: message.data }]);
+        setMessages(prevMessages => [...prevMessages, 
+          { id: message.id, content: message.data }
+        ]);
       });
+    
     }, []);
   
     const handleInputChange = (e) => {
@@ -34,7 +37,7 @@ function Room({context}) {
   
     const handleSendMessage = (e) => {
       e.preventDefault();
-  
+      
         drone.publish({
           room: 'if-room',
           message: {
@@ -42,17 +45,13 @@ function Room({context}) {
             content: messageInput,
           },
         });
-  
-      setMessageInput('');
+      
+      setMessageInput("");
     };
-  
+    
     return (
       <div>    
-        <div className='messagge'>
-          {messages.map((message, index) => (
-            <Message key={index} users={message.users} context={message.context} />            
-          ))}
-        </div>
+        <Message messages={messages} />
         <form onSubmit={handleSendMessage}>
           <label>Poruka:</label>
            <input 

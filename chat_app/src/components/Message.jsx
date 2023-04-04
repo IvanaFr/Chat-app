@@ -1,11 +1,13 @@
 import React from 'react';
 
-function Message(props) {
-  const { users, context } = props;
-
+function Message({ messages }) {
   return (
-    <div>
-      <p>{users}:{context}</p>
+    <div className="message">
+      {messages.map((message) => (
+        <div key={message.id}>
+          <p>{message.content}</p>
+        </div>
+      ))}
     </div>
   );
 }

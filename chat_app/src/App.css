@@ -46,9 +46,10 @@ button {
   justify-content: center;
 }
 
-.messagge {
+.message {
   height: 500px;
   background-color: aliceblue;
   border: 1px solid black;
   border-radius: 10px;
+  color: black;
 }
