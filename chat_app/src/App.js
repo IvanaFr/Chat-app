@@ -6,17 +6,17 @@ import Room from './components/Room';
 
 function App() {
 
-    const [users, setUsers] = useState('');
+    const [user, setUser] = useState('');
     const [connected, setConnected] = useState(false);
   
     if (!connected) {
-      return <Login setUsers={setUsers} setConnected={setConnected} />;
+      return <Login setUser={setUser} setConnected={setConnected} />;
     }
   
     return (
       <div className='App'>
-        <h1>Dobrodošli, {users}!</h1>
-        <Room users={users}/>
+        <h1>Dobrodošli, {user}!</h1>
+        <Room user={user} />
       </div>
     );
   }

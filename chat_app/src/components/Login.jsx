@@ -1,11 +1,11 @@
 import React, {useState } from 'react';
 
 function Login(props) {
-    const {setUsers, setConnected } = props;
-    const [usersInput, setUsersInput] = useState('');
+    const {setUser, setConnected } = props;
+    const [userInput, setUserInput] = useState('');
   
-    const handleUsersChange = (event) => {
-      setUsersInput(event.target.value);
+    const handleUserChange = (event) => {
+      setUserInput(event.target.value);
     };
   
     const handleLoginFormSubmit = (event) => {
@@ -15,10 +15,10 @@ function Login(props) {
     const drone = new window.Scaledrone('CiagbspbfBPWz1W6');
     
       drone.on('open', () => {
-        if (usersInput === "") {
+        if (userInput === "") {
           alert("Upišite svoje ime!");
         } else {
-          setUsers(usersInput);
+          setUser(userInput);
           setConnected(true);
         }
       });
@@ -30,8 +30,8 @@ function Login(props) {
           Korisničko ime:
           <input 
             type="text" 
-            value={usersInput} 
-            onChange={handleUsersChange} 
+            value={userInput} 
+            onChange={handleUserChange} 
             placeholder='Unesi ime...'
           />
         </label>

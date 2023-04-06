@@ -1,14 +1,9 @@
 import React from 'react';
 
-function User({ users }) {
+function User({ user }) {
   return (
     <div>
-      <h2>Korisnici na mreži:{users}</h2>
-      <ul>
-        {users.map((user) => (
-          <li key={user.id}>{user.users}</li>
-        ))}
-      </ul>
+      <h2>Korisnici na mreži:{user}</h2>
     </div>
   );
 }

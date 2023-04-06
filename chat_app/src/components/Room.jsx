@@ -1,69 +1,78 @@
-import { useState, useEffect } from 'react';
-import Message from './Message';
+import { useState, useEffect } from "react";
+import Message from "./Message";
 
-function Room({context}) {
-    const [users, setUsers] = useState([]);
-    const [messages, setMessages] = useState([]);
-    const [messageInput, setMessageInput] = useState('');
-    const [drone, setDrone] = useState(null);
+function Room({ user }) {
+  const [messages, setMessages] = useState([]);
+  const [messageInput, setMessageInput] = useState("");
+  const [drone, setDrone] = useState(null);
   
-    useEffect(() => {
-      const drone = new window.Scaledrone('CiagbspbfBPWz1W6');
-      setDrone(drone);
+  const roomName = "observable-room"; 
+  useEffect(() => {
+    const drone = new window.Scaledrone("CiagbspbfBPWz1W6");
+    setDrone(drone);
 
-      drone.on('open', error => {
+    drone.on("open", (error) => {
+      if (error) {
+        console.error(error);
+      }
+    
+      const room = drone.subscribe(roomName);
+
+      room.on("open", (error) => {
         if (error) {
-          console.error(error);
+          console.error("Room error:", error);
         } else {
-          drone.subscribe('if-room');
+          console.log("Joined room");
         }
       });
 
-      drone.on('members', members => {
-        setUsers(members.map(member => member.clientData));
+      room.on("data", (data, member) => {
+        console.log("room.on.data", data, member);
       });
-  
-      drone.on('message', (message) => {
-        setMessages(prevMessages => [...prevMessages, 
-          { id: message.id, content: message.data }
-        ]);
-      });
-    
-    }, []);
-  
-    const handleInputChange = (e) => {
-      setMessageInput(e.target.value);
-    };
-  
-    const handleSendMessage = (e) => {
-      e.preventDefault();
-      
-        drone.publish({
-          room: 'if-room',
-          message: {
-            users,
-            content: messageInput,
-          },
-        });
-      
-      setMessageInput("");
-    };
-    
-    return (
-      <div>    
-        <Message messages={messages} />
-        <form onSubmit={handleSendMessage}>
-          <label>Poruka:</label>
-           <input 
-             type="text"  
-             placeholder="Napiši poruku..." 
-             value={messageInput} 
-             onChange={handleInputChange} 
-            />         
-          <button type="submit">Pošalji</button>
-        </form>
-      </div>
-    );
-  }
 
-  export default Room;
+      room.on("message", (message) => {
+        console.log("room.on.message", message);
+        setMessages((prevMessages) => [...prevMessages, { id: message.id, content: message.data }]);
+      });
+    });
+
+    return () => {}
+  }, []);
+
+  const handleInputChange = (e) => {
+    setMessageInput(e.target.value);
+  };
+
+  const handleSendMessage = (e) => {
+    e.preventDefault();
+
+    if (drone) {
+      drone.publish({
+        room: roomName,
+        message: {
+          users: user,
+          content: messageInput
+        }
+      });
+    }
+
+    setMessageInput("");
+  };
+
+  return (
+    <div>
+      <div className="messagge">
+        {messages.map((message, index) => (
+          <Message key={index} users={message.content.users} content={message.content.content} />
+        ))}
+      </div>
+      <form onSubmit={handleSendMessage}>
+        <label>Poruka:</label>
+        <input type="text" placeholder="Type your messege here..." value={messageInput} onChange={handleInputChange} />
+        <button type="submit">Pošalji</button>
+      </form>
+    </div>
+  );
+}
+
+export default Room;
