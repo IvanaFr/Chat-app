@@ -1,5 +1,6 @@
 import { useState, useEffect } from "react";
 import Message from "./Message";
+import MessageSend from "./MessageSend";
 
 function Room({ user }) {
   const [messages, setMessages] = useState([]);
@@ -50,7 +51,7 @@ function Room({ user }) {
       drone.publish({
         room: roomName,
         message: {
-          users: user,
+          userName: user,
           content: messageInput
         }
       });
@@ -61,10 +62,15 @@ function Room({ user }) {
 
   return (
     <div>
-      <div className="messagge">
-        {messages.map((message, index) => (
-          <Message key={index} users={message.content.users} content={message.content.content} />
-        ))}
+      <div className="message">
+        {messages.map((message, index) => {
+          if (message.send) { 
+            return <MessageSend key={index} userName={message.content.userName} content={message.content.content} />
+          } else {
+            return <Message key={index} userName={message.content.userName} content={message.content.content} />
+          } 
+        }
+       )}
       </div>
       <form onSubmit={handleSendMessage}>
         <label>Poruka:</label>

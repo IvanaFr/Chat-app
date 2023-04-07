@@ -1,11 +1,11 @@
 import React from 'react';
 
-function Message(props) {
+function MessageSend(props) {
   const { userName, content } = props;
 
   return (
     <div>
-      <ul className="message-list">
+      <ul className="message-send">
         <li>
           <div className='user'>{userName}</div>
           <div className='content'>{content}</div>
@@ -15,4 +15,4 @@ function Message(props) {
   );
 }
 
-export default Message;
+export default MessageSend;
