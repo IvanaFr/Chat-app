@@ -1,18 +1,24 @@
 import React from 'react';
 
 function Message(props) {
-  const { users, content } = props;
+  const { userName, content, type } = props;
 
   return (
     <div>
-      <ul className="messages-list">
-        <li>
-          <div className='user'>{users}</div>
-          <div className='content'>{content}</div>
-        </li> 
-      </ul>
+      {type === "received" ? (
+        <div> 
+          <div className="user">{userName}</div>
+          <div className="content">{content}</div>
+        </div>
+      ) : (
+        <div>
+          <div className="user">{userName}</div>
+          <div className="content">{content}</div>
+        </div>
+      )}
     </div>
   );
 }
 
 export default Message;
+

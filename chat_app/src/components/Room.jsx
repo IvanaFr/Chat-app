@@ -2,11 +2,13 @@ import { useState, useEffect } from "react";
 import Message from "./Message";
 
 function Room({ user }) {
-  const [messages, setMessages] = useState([]);
+  const [receivedMessages, setReceivedMessages] = useState([]);
+  const [sentMessages, setSentMessages] = useState([]);
   const [messageInput, setMessageInput] = useState("");
   const [drone, setDrone] = useState(null);
+
+  const roomName = "observable-room";
   
-  const roomName = "observable-room"; 
   useEffect(() => {
     const drone = new window.Scaledrone("CiagbspbfBPWz1W6");
     setDrone(drone);
@@ -32,7 +34,11 @@ function Room({ user }) {
 
       room.on("message", (message) => {
         console.log("room.on.message", message);
-        setMessages((prevMessages) => [...prevMessages, { id: message.id, content: message.data }]);
+        if (<message className="data userName"></message> === user) {
+          setSentMessages((prevMessages) => [...prevMessages, { id: message.id, content: message.data }]);
+        } else {
+          setReceivedMessages((prevMessages) => [...prevMessages, { id: message.id, content: message.data }]);
+        }
       });
     });
 
@@ -50,7 +56,7 @@ function Room({ user }) {
       drone.publish({
         room: roomName,
         message: {
-          users: user,
+          userName: user,
           content: messageInput
         }
       });
@@ -61,10 +67,17 @@ function Room({ user }) {
 
   return (
     <div>
-      <div className="messagge">
-        {messages.map((message, index) => (
-          <Message key={index} users={message.content.users} content={message.content.content} />
+      <div className="message"> 
+      <div className="message-received">        
+        {receivedMessages.map((message, index) => (
+          <Message key={index} userName={message.content.userName} content={message.content.content} />
         ))}
+      </div>
+      <div className="message-sent" >       
+        {sentMessages.map((message, index) => (
+          <Message key={index} userName={message.content.userName} content={message.content.content} />
+        ))}
+      </div>
       </div>
       <form onSubmit={handleSendMessage}>
         <label>Poruka:</label>
