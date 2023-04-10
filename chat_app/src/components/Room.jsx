@@ -34,7 +34,7 @@ function Room({ user }) {
 
       room.on("message", (message) => {
         console.log("room.on.message", message);
-        if (<message className="data userName"></message> === user) {
+        if (message.data.userName === user) {
           setSentMessages((prevMessages) => [...prevMessages, { id: message.id, content: message.data }]);
         } else {
           setReceivedMessages((prevMessages) => [...prevMessages, { id: message.id, content: message.data }]);
@@ -70,18 +70,23 @@ function Room({ user }) {
       <div className="message"> 
       <div className="message-received">        
         {receivedMessages.map((message, index) => (
-          <Message key={index} userName={message.content.userName} content={message.content.content} />
+          <Message key={message.id} userName={message.content.userName} content={message.content.content} />
         ))}
       </div>
       <div className="message-sent" >       
         {sentMessages.map((message, index) => (
-          <Message key={index} userName={message.content.userName} content={message.content.content} />
+          <Message key={message.id} userName={message.content.userName} content={message.content.content} />
         ))}
       </div>
       </div>
       <form onSubmit={handleSendMessage}>
         <label>Poruka:</label>
-        <input type="text" placeholder="Type your messege here..." value={messageInput} onChange={handleInputChange} />
+        <input 
+          type="text" 
+          placeholder="Type your messege here..." 
+          value={messageInput} 
+          onChange={handleInputChange} 
+        />
         <button type="submit">Pošalji</button>
       </form>
     </div>

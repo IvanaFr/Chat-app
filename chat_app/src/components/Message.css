@@ -1,0 +1,67 @@
+.message {
+    display: flex;
+    flex-direction: column;
+    justify-content:space-between;   
+    margin: 10px;
+    height: 500px;
+    background-color: aliceblue;
+    border: 1px solid black;
+    border-radius: 10px;
+    overflow: auto;
+  }
+  
+  .message-received .message-sent {
+    width: 60%;
+    border: 1px solid black;
+    border-radius: 10px;
+    margin: 5px;
+    background-color: rgb(169, 169, 219);
+    display: flex;
+    flex-direction: column;
+    align-items: flex-start;
+    white-space: pre-wrap;
+    word-wrap: break-word;
+    hyphens: auto;
+    float: left;
+  }
+  
+  .message-received .user {
+    font-weight: bold;
+  }
+  
+  .message-sent .message-sent{
+    width: 60%;
+    border: 1px solid black;
+    border-radius: 10px;
+    margin: 5px;
+    background-color: rgb(180, 141, 218);
+    display: flex;
+    flex-direction: column;
+    align-items: flex-end;
+    white-space: pre-wrap;
+    word-wrap: break-word;
+    hyphens: auto;
+    float: right;
+  }
+  
+  .message-sent .user {
+    font-weight: bold;
+  }
+  
+  .message-sent .content {
+    font-size: small;
+    background-color: lightgray;
+    color: black;
+    padding: 10px;
+    border-radius: 10px;
+    margin: 5px;
+    width: 80%;
+  }
+
+  .timeR {
+    font-size: x-small;
+  }
+
+  .timeS {
+    font-size: x-small;
+  }
